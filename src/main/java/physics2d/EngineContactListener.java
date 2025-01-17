@@ -62,5 +62,46 @@ public class EngineContactListener implements ContactListener {
         }
     }
 
+    // This method gets called before a collision happens with two object
+    @Override
+    public void preSolve(Contact contact, Manifold manifold) {
+        // this function also does the same as the beginContact but here we call all the preSolve method of
+        // all component
+        GameObject objA = (GameObject)contact.getFixtureA().getUserData();
+        GameObject objB = (GameObject)contact.getFixtureB().getUserData();
+        WorldManifold worldManifold = new WorldManifold();
+        contact.getWorldManifold(worldManifold);
+        Vector2f aNormal = new Vector2f(worldManifold.normal.x, worldManifold.normal.y);
+        Vector2f bNormal = new Vector2f(aNormal).negate();
+
+        for (Component c: objA.getAllComponents()){
+            c.preSolve(objB, contact, aNormal);
+        }
+
+        for (Component c: objB.getAllComponents()){
+            c.preSolve(objA, contact, bNormal);
+        }
+    }
+
+    // this method is called right after they collide with each other
+    @Override
+    public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+        // this function also does the same as the beginContact but here we call all the postSolve method of
+        // all component
+        GameObject objA = (GameObject)contact.getFixtureA().getUserData();
+        GameObject objB = (GameObject)contact.getFixtureB().getUserData();
+        WorldManifold worldManifold = new WorldManifold();
+        contact.getWorldManifold(worldManifold);
+        Vector2f aNormal = new Vector2f(worldManifold.normal.x, worldManifold.normal.y);
+        Vector2f bNormal = new Vector2f(aNormal).negate();
+
+        for (Component c: objA.getAllComponents()){
+            c.postSolve(objB, contact, aNormal);
+        }
+
+        for (Component c: objB.getAllComponents()){
+            c.postSolve(objA, contact, bNormal);
+        }
+    }
 
 }
