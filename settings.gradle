@@ -1,2 +1,3 @@
 rootProject.name = 'Mario'
+include 'assets'
 
