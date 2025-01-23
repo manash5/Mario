@@ -1,9 +1,5 @@
 package engine;
 
-import editor.GameViewWindow;
-import editor.MenuBar;
-import editor.PropertiesWindow;
-import editor.SceneHierarchyWindow;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;

@@ -1,10 +1,12 @@
 package components;
 
 import editor.PropertiesWindow;
+import engine.GameObject;
 import engine.Window;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-
+import engine.Prefabs;
+import engine.MouseListener;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 // Gizmos are the arrow that appears when we click the gameobject in the levelEditorScene. They are GameObjects in itself

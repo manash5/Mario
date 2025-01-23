@@ -1,6 +1,5 @@
 package components;
 
-import editor.PropertiesWindow;
 import engine.MouseListener;
 
 // This class is used to change the x and y position of the object when clicked on gizmos either on x axis or y axis
