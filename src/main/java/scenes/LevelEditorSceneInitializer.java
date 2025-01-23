@@ -1,6 +1,10 @@
 package scenes;
 
 import components.*;
+import engine.Direction;
+import engine.GameObject;
+import engine.Prefabs;
+import engine.Sound;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;

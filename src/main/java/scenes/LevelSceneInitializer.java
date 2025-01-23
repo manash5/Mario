@@ -1,6 +1,7 @@
 package scenes;
 
 import components.*;
+import engine.GameObject;
 import util.AssetPool;
 
 

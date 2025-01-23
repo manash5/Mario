@@ -2,6 +2,7 @@ package components;
 
 // this class is used when picking objects from spritesheet imgui window it helps to pick and place
 
+import editor.PropertiesWindow;
 import engine.GameObject;
 import engine.KeyListener;
 import engine.MouseListener;
