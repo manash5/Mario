@@ -1,6 +1,5 @@
 package components;
 
-import editor.PropertiesWindow;
 import engine.GameObject;
 import engine.KeyListener;
 import engine.Window;
