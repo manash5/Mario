@@ -1,5 +1,6 @@
 package engine;
 
+import Database.MyJDBC;
 import editor.SceneHierarchyWindow;
 import observers.EventSystem;
 import observers.Observer;
@@ -21,6 +22,8 @@ import scenes.Scene;
 import scenes.SceneInitializer;
 import util.AssetPool;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -55,6 +58,15 @@ public class Window implements Observer {
     private long audioContext;
     private long audioDevice;
     public static boolean editMode = true;
+
+    public Instant startTime;
+    public Instant pauseStartTime;
+    public long totalElapsedTime = 0;
+    public boolean isPaused = false;
+    public long pauseTime = 0;
+    public static int coinsCollected =0;
+
+    public MyJDBC myJDBC = new MyJDBC();
 
     // Constructor
     private Window() {
@@ -357,6 +369,17 @@ public class Window implements Observer {
                 Window.setEditMode(false);
                 AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").play();
 //                sceneHierarchyWindow.setFalse();
+                // Resume or start the timer
+                if (isPaused) {
+                    isPaused = false; // Resume the timer
+                    startTime = Instant.now(); // Mark resume time
+                    System.out.println("Game resumed at: " + startTime);
+                } else {
+                    startTime = Instant.now(); // First-time start
+                    totalElapsedTime = 0; // Reset only when restarting fresh
+                    System.out.println("Game started at: " + startTime);
+                }
+
                 break;
             case GameEngineStopPlay:
                 this.runtimePlaying = false;
@@ -364,6 +387,17 @@ public class Window implements Observer {
                 Window.changeScene(new LevelEditorSceneInitializer());
                 window.setEditMode(true);
                 AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").stop();
+
+                // Pause the timer
+                if (startTime != null) {
+                    totalElapsedTime += Duration.between(startTime, Instant.now()).toSeconds();
+                    totalElapsedTime -= pauseTime;
+                    isPaused = true;
+                    System.out.println("Game paused. Total elapsed time: " + totalElapsedTime + " seconds.");
+                }
+                System.out.println("You have collected " + coinsCollected + " coins");
+                System.out.println(MyJDBC.getUserID());
+                myJDBC.checkScore(MyJDBC.getUserID(), coinsCollected, (int)totalElapsedTime);
                 break;
             case LoadLevel:
                 Window.changeScene(new LevelEditorSceneInitializer());
