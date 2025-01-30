@@ -196,7 +196,6 @@ public class LoginUI extends JFrame implements ActionListener {
             frame.dispose();
 
             new SignupUI();
-
         }
 
         if (e.getSource() == forgotPassword){
