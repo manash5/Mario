@@ -27,6 +27,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Vector;
 
+import static imgui.ImGui.isKeyPressed;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.openal.ALC10.*;
@@ -105,6 +106,10 @@ public class Window implements Observer {
     // Makes a function that returns the current scene which we are on
     public static Scene getScene() {
         return currentScene;
+    }
+
+    public static void incrementCoin(){
+        coinsCollected+=1;
     }
 
 
@@ -239,6 +244,11 @@ public class Window implements Observer {
         // assigns the defaultShader and pickingshader file so that it can be used
         Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
         Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
+
+        if (isKeyPressed(GLFW_KEY_ESCAPE)){
+            pauseTime += Duration.between(pauseStartTime, Instant.now()).toSeconds();
+            System.out.println("You paused for " + pauseTime);
+        }
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.

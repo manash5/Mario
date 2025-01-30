@@ -4,6 +4,7 @@ import engine.GameObject;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import util.AssetPool;
+import engine.Window;
 
 // this class describes the properties and characteristic of the coin in the mario game
 
@@ -11,6 +12,7 @@ public class Coin extends Component{
     private Vector2f topY;
     private float coinSpeed = 1.4f;
     private transient boolean playAnim = false;
+    private boolean called = false;
 
     // sets the topY a little bit above the y position of the coin
     @Override
@@ -39,6 +41,10 @@ public class Coin extends Component{
         // This ensures the coin reacts properly when collected by the player, plays the correct sound, and begins the animation.
         if (obj.getComponent(PlayerController.class) != null){
             AssetPool.getSound("assets/sounds/coin.ogg").play();
+            if(!called){
+                Window.incrementCoin();
+                called = true;
+            }
             playAnim = true;
             contact.setEnabled(false);
         }

@@ -50,7 +50,7 @@ public class SignupUI extends JFrame implements ActionListener {
 
         // Username Field
         usernameField = new RoundedTextField("Username");
-        usernameField.setBounds(250, 300, 400, 50);
+        usernameField.setBounds(250, 300, 400, 60);
         usernameField.setBorder(null);
         usernameField.setBackground(Color.WHITE);
         usernameField.setFont(new Font("Serif", Font.ITALIC, 16));

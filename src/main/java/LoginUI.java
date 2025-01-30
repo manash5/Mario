@@ -172,8 +172,7 @@ public class LoginUI extends JFrame implements ActionListener {
             System.out.println("Your password is " + new String(passwordField.getPassword()));
             MyJDBC jdbc = new MyJDBC();
             if (jdbc.checkLogin(usernameField.getText(), new String(passwordField.getPassword())) ==3){
-                Window window = Window.get();
-                window.run();
+                new MarioAdventureUI();
                 frame.setVisible(false);
                 frame.dispose();
 

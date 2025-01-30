@@ -2,6 +2,7 @@
 
     import org.joml.Vector2f;
     import util.AssetPool;
+    import engine.Window;
 
     // this class is used to generate coin after a block is collided by a player
 
@@ -14,6 +15,7 @@
         public void start(){
             topY = new Vector2f(this.gameObject.transform.position.y).add(0, 0.5f);
             AssetPool.getSound("assets/sounds/coin.ogg").play();
+            Window.incrementCoin();
         }
 
         // makes the coin go up to the highest point and after it is reached that point, it destroys

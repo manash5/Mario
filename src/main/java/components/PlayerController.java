@@ -221,7 +221,7 @@ public class PlayerController extends Component {
         if (KeyListener.isKeyPressed(GLFW_KEY_ESCAPE) && !wasEscPressed) {
             onPause = !onPause;  // Toggle the pause state
             wasEscPressed = true;  // Mark that ESC was pressed
-        } else if (!KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)) {
+        } else if (!KeyListener.isKeyPressed(GLFW_KEY_ESCAPE) ) {
             wasEscPressed = false;  // Reset the state when ESC is released
         }
 
