@@ -68,6 +68,7 @@ public class Window implements Observer {
     public static int coinsCollected =0;
 
     public MyJDBC myJDBC = new MyJDBC();
+    private static boolean directGame = false;
 
     // Constructor
     private Window() {
@@ -223,8 +224,22 @@ public class Window implements Observer {
         this.imguiLayer = new ImGuiLayer(glfwWindow, pickingTexture);
         this.imguiLayer.initImGui();
 
+        if (directGame){
+            window.onNotify(null, new Event(EventType.GameEngineStartPlay));
+//            this.runtimePlaying = true;
+////            EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));
+//            Window.changeScene(new LevelSceneInitializer());
+//            Window.setEditMode(false);
+        } else {
+//            // Initializes the screen
+//            this.runtimePlaying = false;
+//            Window.changeScene(new LevelEditorSceneInitializer());
+//            Window.setEditMode(true);
+            window.onNotify(null, new Event(EventType.GameEngineStopPlay));
+        }
         // Initializes the screen
-        Window.changeScene(new LevelEditorSceneInitializer());
+//        Window.changeScene(new LevelEditorSceneInitializer());
+//        EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));
     }
 
     // This part is done to keep track of things every time while playing game
@@ -374,7 +389,9 @@ public class Window implements Observer {
         switch (event.type){
             case GameEngineStartPlay:
                 this.runtimePlaying = true;
-                currentScene.save();
+                if(currentScene!= null){
+                    currentScene.save();
+                }
                 Window.changeScene(new LevelSceneInitializer());
                 Window.setEditMode(false);
                 AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").play();
@@ -389,7 +406,9 @@ public class Window implements Observer {
                     totalElapsedTime = 0; // Reset only when restarting fresh
                     System.out.println("Game started at: " + startTime);
                 }
-
+                System.out.println("You have collected " + coinsCollected + " coins");
+                System.out.println(MyJDBC.getUserID());
+                myJDBC.checkScore(MyJDBC.getUserID(), coinsCollected, (int)totalElapsedTime);
                 break;
             case GameEngineStopPlay:
                 this.runtimePlaying = false;
@@ -438,6 +457,10 @@ public class Window implements Observer {
 
     public boolean getEditMode(){
         return editMode;
+    }
+
+    public void setDirectGame(boolean value){
+        directGame = value;
     }
 
 }

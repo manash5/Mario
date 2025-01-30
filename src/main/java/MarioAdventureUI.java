@@ -2,12 +2,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import Database.MyJDBC;
 import engine.Window;
+import observers.EventSystem;
+import observers.events.Event;
+import observers.events.EventType;
+import scenes.LevelEditorSceneInitializer;
+import scenes.LevelSceneInitializer;
 
 public class MarioAdventureUI extends JFrame implements ActionListener {
     JFrame frame;
     JButton leaderboardButton;
     JButton editButton;
+    JButton playButton;
+    JButton deleteButton;
+    Window window = Window.get();
+
 
     // Constructor for setting up the JFrame
     public MarioAdventureUI() {
@@ -35,10 +46,10 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         titleLabel.setBounds(600, 220, 600, 50); // Adjust position and size as needed
 
         // Add buttons
-        JButton playButton = new JButton("PLAY GAME");
+        playButton = new JButton("PLAY GAME");
         editButton = new JButton("EDIT LEVEL");
         leaderboardButton = new JButton("LEADERBOARD");
-        JButton deleteButton = new JButton("Delete your account.");
+        deleteButton = new JButton("Delete your account.");
 
         // Style buttons
         Font buttonFont = new Font("Arial", Font.BOLD, 24);
@@ -61,6 +72,8 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
 
         leaderboardButton.addActionListener(this);
         editButton.addActionListener(this);
+        playButton.addActionListener(this);
+        deleteButton.addActionListener(this);
 
 
         deleteButton.setFocusPainted(false);
@@ -97,8 +110,28 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == editButton){
-            Window window = Window.get();
+            window.setDirectGame(false);
             window.run();
+            frame.setVisible(false);
+            frame.dispose();
+        }
+
+        if (e.getSource() == playButton) {
+            window.setDirectGame(true);
+            window.run();
+            frame.setVisible(false);
+            frame.dispose();
+//            window.init();
+//            EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));
+
+        }
+
+        if (e.getSource() == deleteButton){
+            MyJDBC jdbc = new MyJDBC();
+            jdbc.deleteUser(Integer.parseInt(MyJDBC.getUserID()));
+            JOptionPane.showMessageDialog(null, "Your Account has been deleted",
+                    "Account Deleted",JOptionPane.INFORMATION_MESSAGE);
+            new LoginUI();
             frame.setVisible(false);
             frame.dispose();
         }

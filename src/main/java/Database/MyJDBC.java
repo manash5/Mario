@@ -175,4 +175,31 @@ public class MyJDBC {
         return username1;
     }
 
+    public void deleteUser(int userID) {
+        String deleteLeadershipQuery = "DELETE FROM LeadershipBoard WHERE userID = ?";
+        String deleteLoginQuery = "DELETE FROM Login WHERE userID = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement deleteLeadershipStmt = connection.prepareStatement(deleteLeadershipQuery);
+             PreparedStatement deleteLoginStmt = connection.prepareStatement(deleteLoginQuery)) {
+
+            // Delete from LeadershipBoard first (foreign key constraint consideration)
+            deleteLeadershipStmt.setInt(1, userID);
+            deleteLeadershipStmt.executeUpdate();
+
+            // Delete from Login table
+            deleteLoginStmt.setInt(1, userID);
+            int rowsAffected = deleteLoginStmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("User with userID " + userID + " deleted successfully from both tables.");
+            } else {
+                System.out.println("User with userID " + userID + " not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
