@@ -34,6 +34,9 @@ dependencies {
     // imgui files
     implementation fileTree('libs') {include '*.jar'}
 
+    // integrating mysql
+    implementation fileTree('libs3') {include '*.jar'}
+
     // LWJGL files
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
 
