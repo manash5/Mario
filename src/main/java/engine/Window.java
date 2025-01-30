@@ -1,7 +1,9 @@
 package engine;
 
 import Database.MyJDBC;
+import editor.GameViewWindow;
 import editor.SceneHierarchyWindow;
+import imgui.ImGui;
 import observers.EventSystem;
 import observers.Observer;
 import observers.events.Event;
@@ -226,20 +228,9 @@ public class Window implements Observer {
 
         if (directGame){
             window.onNotify(null, new Event(EventType.GameEngineStartPlay));
-//            this.runtimePlaying = true;
-////            EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));
-//            Window.changeScene(new LevelSceneInitializer());
-//            Window.setEditMode(false);
         } else {
-//            // Initializes the screen
-//            this.runtimePlaying = false;
-//            Window.changeScene(new LevelEditorSceneInitializer());
-//            Window.setEditMode(true);
             window.onNotify(null, new Event(EventType.GameEngineStopPlay));
         }
-        // Initializes the screen
-//        Window.changeScene(new LevelEditorSceneInitializer());
-//        EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));
     }
 
     // This part is done to keep track of things every time while playing game
@@ -459,7 +450,7 @@ public class Window implements Observer {
         return editMode;
     }
 
-    public void setDirectGame(boolean value){
+    public static void setDirectGame(boolean value){
         directGame = value;
     }
 

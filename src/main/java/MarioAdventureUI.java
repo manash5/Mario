@@ -110,14 +110,14 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == editButton){
-            window.setDirectGame(false);
+            Window.setDirectGame(false);
             window.run();
             frame.setVisible(false);
             frame.dispose();
         }
 
         if (e.getSource() == playButton) {
-            window.setDirectGame(true);
+            Window.setDirectGame(true);
             window.run();
             frame.setVisible(false);
             frame.dispose();
