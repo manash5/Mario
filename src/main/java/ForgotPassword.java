@@ -19,7 +19,7 @@ public class ForgotPassword extends JFrame {
         super("Forgot Password");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        backgroundPanel = new BackgroundPanel("./assets/images/forgotpw.png");
+        backgroundPanel = new BackgroundPanel("./assets/images/forgetpw.png");
         add(backgroundPanel);
         backgroundPanel.setLayout(null);
 

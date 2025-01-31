@@ -16,6 +16,7 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
     JButton leaderboardButton;
     JButton editButton;
     JButton playButton;
+    JButton backgroundButton;
     JButton deleteButton;
     Window window = Window.get();
 
@@ -49,6 +50,7 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         playButton = new JButton("PLAY GAME");
         editButton = new JButton("EDIT LEVEL");
         leaderboardButton = new JButton("LEADERBOARD");
+        backgroundButton = new JButton("Change Background");
         deleteButton = new JButton("Delete your account.");
 
         // Style buttons
@@ -56,12 +58,14 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         playButton.setFont(buttonFont);
         editButton.setFont(buttonFont);
         leaderboardButton.setFont(buttonFont);
+        backgroundButton.setFont(buttonFont);
         deleteButton.setFont(new Font("Arial", Font.PLAIN, 14));
 
         // Set button bounds
         playButton.setBounds(650, 400, 400, 60);
         editButton.setBounds(650, 480, 400, 60);
         leaderboardButton.setBounds(650, 560, 400, 60);
+        backgroundButton.setBounds(650, 640, 400, 60);
         deleteButton.setBounds(1500, 930, 200, 40);
 
         // Set button colors and transparency
@@ -69,10 +73,12 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         setButtonStyle(playButton, transparentGray);
         setButtonStyle(editButton, transparentGray);
         setButtonStyle(leaderboardButton, transparentGray);
+        setButtonStyle(backgroundButton, transparentGray);
 
         leaderboardButton.addActionListener(this);
         editButton.addActionListener(this);
         playButton.addActionListener(this);
+        backgroundButton.addActionListener(this);
         deleteButton.addActionListener(this);
 
 
@@ -86,6 +92,7 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         frame.add(playButton);
         frame.add(editButton);
         frame.add(leaderboardButton);
+        frame.add(backgroundButton);
         frame.add(deleteButton);
         frame.add(backgroundLabel);
 
@@ -126,6 +133,12 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
 //            window.init();
 //            EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));
 
+        }
+
+        if (e.getSource()==backgroundButton){
+            frame.setVisible(false);
+            frame.dispose();
+            new BackgroundSelector();
         }
 
         if (e.getSource() == deleteButton){

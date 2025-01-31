@@ -1,13 +1,19 @@
+import UIUtil.RoundedButton;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BackgroundSelector {
+public class BackgroundSelector extends JFrame implements ActionListener {
     private JFrame frame;
     private JLabel imageLabel;
     private JButton selectButton;
+    private JButton backButton;
     private int currentIndex = 0;
+    private String imageAddress = "./assets/images/background.png";
     private Map<Integer, Boolean> selectionMap = new HashMap<>();
 
     private final String[] imagePaths = {
@@ -17,7 +23,7 @@ public class BackgroundSelector {
             "./assets/images/Mountain.jpg"
     };
 
-    public BackgroundSelector() {
+    public BackgroundSelector()  {
         frame = new JFrame("Background Selector");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,14 +51,29 @@ public class BackgroundSelector {
                 BorderFactory.createEmptyBorder(10, 30, 10, 30) // Increased padding
         ));
         selectButton.addActionListener(e -> toggleSelection());
+        selectButton.addActionListener(this);
         titlePanel.add(selectButton, BorderLayout.EAST);
+
+        // Select Button
+        backButton = new JButton("");
+        ImageIcon icon = new ImageIcon("./assets/images/left.png");
+        Image img = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+        backButton.setIcon(new ImageIcon(img));
+        backButton.setBackground(new Color(200, 80, 50));
+        backButton.setFocusPainted(false);
+        backButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 80, 50), 2),
+                BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        backButton.addActionListener(this);
+        titlePanel.add(backButton, BorderLayout.WEST);
 
         frame.add(titlePanel, BorderLayout.NORTH);
 
         // Center Panel
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setBackground(new Color(10, 10, 20));
-        centerPanel.setPreferredSize(new Dimension(800, 800));
+        centerPanel.setPreferredSize(new Dimension(1200, 1200));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -111,7 +132,7 @@ public class BackgroundSelector {
             return;
         }
 
-        Image img = icon.getImage().getScaledInstance(600, 400, Image.SCALE_SMOOTH);
+        Image img = icon.getImage().getScaledInstance(1000, 600, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(img));
         imageLabel.setText("");
         updateSelectButton();
@@ -147,5 +168,18 @@ public class BackgroundSelector {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(BackgroundSelector::new);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==backButton){
+            new MarioAdventureUI();
+            frame.setVisible(false);
+            frame.dispose();
+        }
+
+        if (e.getSource() == selectButton){
+            imageAddress = imagePaths[currentIndex];
+        }
     }
 }
