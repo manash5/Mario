@@ -8,6 +8,7 @@ import Database.MyJDBC;
 import UIUtil.RoundedButton;
 import UIUtil.RoundedTextField;
 import UIUtil.CustomPasswordField;
+import UIUtil.BackgroundPanel;
 
 public class ForgotPassword extends JFrame implements ActionListener{
     private CustomPasswordField passwordField, confirmPasswordField;
@@ -125,55 +126,6 @@ public class ForgotPassword extends JFrame implements ActionListener{
         }
     }
 
-    class BackgroundPanel extends JPanel {
-        private Image backgroundImage;
-
-        public BackgroundPanel(String filePath) {
-            try {
-                ImageIcon bgIcon = new ImageIcon(filePath);
-                backgroundImage = bgIcon.getImage();
-            } catch (Exception e) {
-                System.err.println("Error loading image: " + filePath);
-                e.printStackTrace();
-                setBackground(Color.LIGHT_GRAY);
-            }
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (backgroundImage != null) {
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-            }
-        }
-    }
-
-    private JTextField createPlaceholderField(String placeholder) {
-        JTextField field = new JTextField(20);
-        field.setFont(new Font("Serif", Font.ITALIC, 18));
-        field.setForeground(Color.GRAY);
-        field.setText(placeholder);
-        field.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(5, 10, 5, 10),
-                createRoundedBorder()
-        ));
-        field.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-                if (field.getText().equals(placeholder)) {
-                    field.setText("");
-                    field.setForeground(Color.BLACK);
-                }
-            }
-
-            public void focusLost(FocusEvent e) {
-                if (field.getText().isEmpty()) {
-                    field.setText(placeholder);
-                    field.setForeground(Color.GRAY);
-                }
-            }
-        });
-        return field;
-    }
 
     private void setPasswordPlaceholder(JPasswordField field, String placeholder) {
         field.setFont(new Font("Serif", Font.ITALIC, 18));
