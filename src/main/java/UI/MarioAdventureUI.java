@@ -1,3 +1,5 @@
+package UI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,11 +7,6 @@ import java.awt.event.ActionListener;
 
 import Database.MyJDBC;
 import engine.Window;
-import observers.EventSystem;
-import observers.events.Event;
-import observers.events.EventType;
-import scenes.LevelEditorSceneInitializer;
-import scenes.LevelSceneInitializer;
 
 public class MarioAdventureUI extends JFrame implements ActionListener {
     JFrame frame;
@@ -113,7 +110,7 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == leaderboardButton) {
-            new LeadershipBoard(); // Assuming LeadershipBoard is another class you created
+            new LeadershipBoard(); // Assuming UI.LeadershipBoard is another class you created
             frame.setVisible(false);
             frame.dispose();
         }

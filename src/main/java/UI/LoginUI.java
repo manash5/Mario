@@ -1,3 +1,5 @@
+package UI;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +15,6 @@ import Database.MyJDBC;
 import UIUtil.CustomPasswordField;
 import UIUtil.RoundedButton;
 import UIUtil.RoundedTextField;
-import engine.Window;
 
 public class LoginUI extends JFrame implements ActionListener {
     JFrame frame;

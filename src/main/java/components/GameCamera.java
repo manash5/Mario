@@ -1,5 +1,6 @@
 package components;
 
+import UI.BackgroundSelector;
 import engine.Camera;
 import engine.GameObject;
 import engine.KeyListener;
@@ -34,7 +35,7 @@ public class GameCamera extends Component {
     private transient int vertexID, fragmentID, shaderProgram;
     private transient int vaoID, vboID, eboID;
 
-    private transient Texture backgroundTexture = AssetPool.getTexture("assets/images/background.png");
+    private transient Texture backgroundTexture = AssetPool.getTexture(BackgroundSelector.getImageAddress());
 
     private Vector4f skyColor = new Vector4f(92.0f / 255.0f, 148.0f / 255.0f, 252.0f / 255.0f, 1.0f);
     private Vector4f undergroundColor = new Vector4f(0, 0, 0, 1);

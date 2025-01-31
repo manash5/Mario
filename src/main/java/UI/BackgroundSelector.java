@@ -1,4 +1,4 @@
-import UIUtil.RoundedButton;
+package UI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ public class BackgroundSelector extends JFrame implements ActionListener {
     private JButton selectButton;
     private JButton backButton;
     private int currentIndex = 0;
-    private String imageAddress = "./assets/images/background.png";
+    private static String imageAddress = "./assets/images/background.png";
     private Map<Integer, Boolean> selectionMap = new HashMap<>();
 
     private final String[] imagePaths = {
@@ -181,5 +181,9 @@ public class BackgroundSelector extends JFrame implements ActionListener {
         if (e.getSource() == selectButton){
             imageAddress = imagePaths[currentIndex];
         }
+    }
+
+    public static String getImageAddress(){
+        return imageAddress;
     }
 }

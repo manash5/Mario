@@ -469,4 +469,9 @@ public class Window implements Observer {
     public Instant getStartTime() {
         return startTime;
     }
+
+    public void close() {
+        glfwSetWindowShouldClose(glfwWindow, true);
+    }
+
 }
