@@ -18,7 +18,7 @@ public class MyJDBC {
      * - Returns 2 if the username does not exist.
      * - Returns 3 if both username and password match.
      */
-    public int checkLogin(String username, String password) {
+    public static int checkLogin(String username, String password) {
         String checkUsernameQuery = "SELECT * FROM Login WHERE username = ?";
         String checkPasswordQuery = "SELECT * FROM Login WHERE username = ? AND username_password = ?";
 
@@ -171,6 +171,26 @@ public class MyJDBC {
         return UserID;
     }
 
+    public static String getUserID(String username) {
+        String query = "SELECT userID FROM Login WHERE username = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("userID");
+            } else {
+                System.out.println("Username not found.");
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String getUsername(){
         return username1;
     }
@@ -200,6 +220,38 @@ public class MyJDBC {
             e.printStackTrace();
         }
     }
+
+    public static void resetPassword(int userID, String newPassword) {
+        String checkUserQuery = "SELECT userID FROM Login WHERE userID = ?";
+        String updatePasswordQuery = "UPDATE Login SET username_password = ? WHERE userID = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement checkUserStmt = connection.prepareStatement(checkUserQuery);
+             PreparedStatement updatePasswordStmt = connection.prepareStatement(updatePasswordQuery)) {
+
+            // Check if userID exists
+            checkUserStmt.setInt(1, userID);
+            ResultSet resultSet = checkUserStmt.executeQuery();
+
+            if (resultSet.next()) {
+                // User exists, update password
+                updatePasswordStmt.setString(1, newPassword);
+                updatePasswordStmt.setInt(2, userID);
+                int rowsUpdated = updatePasswordStmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    System.out.println("Password reset successfully for userID: " + userID);
+                } else {
+                    System.out.println("Failed to reset password.");
+                }
+            } else {
+                System.out.println("UserID not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

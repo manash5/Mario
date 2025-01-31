@@ -4,16 +4,18 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
+import Database.MyJDBC;
 import UIUtil.RoundedButton;
 import UIUtil.RoundedTextField;
 import UIUtil.CustomPasswordField;
 
-public class ForgotPassword extends JFrame {
+public class ForgotPassword extends JFrame implements ActionListener{
     private CustomPasswordField passwordField, confirmPasswordField;
     private RoundedTextField usernameField;
     private JCheckBox showPasswordBox, showConfirmBox;
     private RoundedButton cancelButton, resetButton;
     private BackgroundPanel backgroundPanel;
+    private MyJDBC myJDBC;
 
     public ForgotPassword() {
         super("Forgot Password");
@@ -83,11 +85,13 @@ public class ForgotPassword extends JFrame {
         cancelButton = createStyledButton("Cancel");
         cancelButton.setBounds(200, y-50, 140, 40);
         cancelButton.setBackground(new Color(12,40,111));
+        cancelButton.addActionListener(this);
         panel.add(cancelButton);
 
         resetButton = createStyledButton("Reset");
         resetButton.setBounds(450, y-50, 140, 40);
         resetButton.setBackground(new Color(12,40,111));
+        resetButton.addActionListener(this);
         panel.add(resetButton);
 
         showPasswordBox.addActionListener(e -> togglePasswordVisibility(passwordField, showPasswordBox));
@@ -97,6 +101,28 @@ public class ForgotPassword extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()== resetButton){
+            if (MyJDBC.checkLogin(usernameField.getText(), new String(passwordField.getPassword()))==2){
+                JOptionPane.showMessageDialog(null, "you have entered an invalid username",
+                        "Invalid Username",JOptionPane.ERROR_MESSAGE);
+            } else if (new String(passwordField.getPassword()).equals(new String(confirmPasswordField.getPassword()))){
+                int userID = Integer.parseInt(MyJDBC.getUserID(usernameField.getText()));
+                MyJDBC.resetPassword(userID, new String(passwordField.getPassword()));
+                JOptionPane.showMessageDialog(null, "Your password has been sucessfully reset",
+                        "Password reset",JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                this.dispose();
+                new LoginUI();
+            } else {
+                JOptionPane.showMessageDialog(null, "password and confirm password does not match",
+                        "Password Mismatch",JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
     }
 
     class BackgroundPanel extends JPanel {
