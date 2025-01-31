@@ -2,7 +2,8 @@
 
 public class Main {
     public static void main(String[] args) {
-        new LoginUI();
+//        new LoginUI();
+        new GameFinished();
         System.out.println("hello");
     }
 }

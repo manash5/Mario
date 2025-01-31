@@ -122,6 +122,7 @@ public class PlayerController extends Component {
                     System.out.println(totalElapsedTime);
                     myJDBC.checkScore(MyJDBC.getUserID(), Window.getScene().getCoinCounter(), (int)totalElapsedTime);
                     Window.changeScene(new LevelSceneInitializer());
+                    ;
                 }
             }
             return;
