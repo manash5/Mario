@@ -1,15 +1,39 @@
 import Database.MyJDBC;
+import UIUtil.RoundedButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Comparator;
 import java.util.List;
 
-public class LeadershipBoard extends JFrame {
+public class LeadershipBoard extends JFrame implements ActionListener {
+    RoundedButton button;
     public LeadershipBoard() {
-        setTitle("Leadership Board");
+        ImageIcon icon = new ImageIcon("./assets/images/left.png");
+        Image img = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+
+        button = new RoundedButton("");
+        button.setPreferredSize(new Dimension(100, 40)); // Adjust size for visibility
+        button.setIcon(new ImageIcon(img));
+        button.addActionListener(this);
+
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // **Top Panel (Contains Only Back Button)**
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(new Color(28, 54, 164));
+        topPanel.setPreferredSize(new Dimension(getWidth(), 70)); // Increase height slightly
+
+        // **Panel for Button (Left Aligned & Moved Down)**
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        buttonPanel.setOpaque(false);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0)); // Moves the button down
+        buttonPanel.add(button);
+
+        topPanel.add(buttonPanel, BorderLayout.WEST);
 
         // Main panel (Full screen)
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -17,8 +41,11 @@ public class LeadershipBoard extends JFrame {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
+        gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
+
+        mainPanel.add(topPanel, gbc);
 
         // **Title Panel (Above the leaderboard)**
         JPanel titlePanel = new JPanel();
@@ -32,7 +59,7 @@ public class LeadershipBoard extends JFrame {
         titlePanel.add(titleLabel, BorderLayout.CENTER);
 
         // Positioning the title
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.insets = new Insets(70, 300, 0, 300); // Reduced top padding
         gbc.weighty = 0.0;
         mainPanel.add(titlePanel, gbc);
@@ -42,7 +69,7 @@ public class LeadershipBoard extends JFrame {
         leaderboardPanel.setBackground(new Color(28, 54, 164));
         leaderboardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 6)); // Black border
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.insets = new Insets(0, 100, 10, 100);
         gbc.weighty = 0.0;
         mainPanel.add(leaderboardPanel, gbc);
@@ -90,7 +117,7 @@ public class LeadershipBoard extends JFrame {
         // Push everything upwards
         JPanel spacerPanel = new JPanel();
         spacerPanel.setBackground(new Color(28, 54, 164)); // Match the background color of mainPanel
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.weighty = 1.0; // Pushes everything to the top
         mainPanel.add(spacerPanel, gbc);
 
@@ -112,7 +139,11 @@ public class LeadershipBoard extends JFrame {
         return rowPanel;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(LeadershipBoard::new);
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==button){
+            new MarioAdventureUI();
+            this.dispose();
+        }
     }
 }
