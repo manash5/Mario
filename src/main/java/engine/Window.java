@@ -230,6 +230,7 @@ public class Window implements Observer {
 
         if (directGame){
             window.onNotify(null, new Event(EventType.GameEngineStartPlay));
+            startTime = Instant.now();
         } else {
             window.onNotify(null, new Event(EventType.GameEngineStopPlay));
         }
@@ -465,4 +466,7 @@ public class Window implements Observer {
         return (int)totalElapsedTime;
     }
 
+    public Instant getStartTime() {
+        return startTime;
+    }
 }

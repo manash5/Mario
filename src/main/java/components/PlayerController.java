@@ -18,6 +18,9 @@ import scenes.LevelEditorSceneInitializer;
 import scenes.LevelSceneInitializer;
 import util.AssetPool;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 // this playerController class is responsible for movement and behaviour of characters like mario, luigi
@@ -72,6 +75,7 @@ public class PlayerController extends Component {
     private transient boolean hasPlayedMusic = false; // Flag to ensure music plays only once
     private transient MyJDBC myJDBC = new MyJDBC();
 
+    private long totalElapsedTime =0;
     // Initializes all the stuff necessary for the character
     @Override
     public void start(){
@@ -114,8 +118,9 @@ public class PlayerController extends Component {
                 if (timeToCastle <= 0){
                     AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").play();
                     System.out.println(Window.getScene().getCoinCounter());
-                    System.out.println(Window.get().getTotalElapsedTime());
-//                    myJDBC.checkScore(MyJDBC.getUserID(), Window.getScene().getCoinCounter(), (int)Window.getTotalElapsedTime());
+                    totalElapsedTime += Duration.between(Window.get().getStartTime(), Instant.now()).toSeconds();
+                    System.out.println(totalElapsedTime);
+                    myJDBC.checkScore(MyJDBC.getUserID(), Window.getScene().getCoinCounter(), (int)totalElapsedTime);
                     Window.changeScene(new LevelSceneInitializer());
                 }
             }

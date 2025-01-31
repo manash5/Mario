@@ -1,4 +1,6 @@
 import Database.MyJDBC;
+import UIUtil.CustomPasswordField;
+import UIUtil.RoundedTextField;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -163,82 +165,6 @@ public class SignupUI extends JFrame implements ActionListener {
 
         // Show Frame
         frame.setVisible(true);
-    }
-
-    // Custom Rounded Text Field Class
-    class RoundedTextField extends JTextField {
-        public RoundedTextField(String text) {
-            super(text);
-            setOpaque(false);
-            setBorder(new EmptyBorder(10, 15, 10, 15));
-            setFont(new Font("Serif", Font.ITALIC, 16));
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(Color.WHITE);
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
-            super.paintComponent(g);
-        }
-    }
-
-    // Custom Password Field
-    class CustomPasswordField extends JPasswordField {
-        private boolean showingText = true;
-        private String placeholder;
-
-        public CustomPasswordField(String text) {
-            super(text);
-            placeholder = text;
-            setOpaque(false);
-            setBorder(new EmptyBorder(10, 15, 10, 15));
-            setFont(new Font("Serif", Font.ITALIC, 16));
-            setEchoChar((char) 0);
-
-            addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    if (showingText) {
-                        setText("");
-                        setEchoChar('*');
-                        showingText = false;
-                    }
-                }
-            });
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(Color.WHITE);
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
-            super.paintComponent(g);
-        }
-    }
-
-    // Custom Rounded Button
-    class RoundedButton extends JButton {
-        public RoundedButton(String text) {
-            super(text);
-            setContentAreaFilled(false);
-            setFocusPainted(false);
-            setBorderPainted(false);
-            setOpaque(false);
-            setForeground(Color.WHITE);
-            setFont(new Font("Serif", Font.BOLD, 18));
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(10, 10, 50));
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
-            super.paintComponent(g);
-        }
     }
 
 

@@ -10,15 +10,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import Database.MyJDBC;
+import UIUtil.CustomPasswordField;
+import UIUtil.RoundedButton;
+import UIUtil.RoundedTextField;
 import engine.Window;
 
 public class LoginUI extends JFrame implements ActionListener {
     JFrame frame;
-    JButton enterButton;
-    JButton createAccountButton;
-    JButton forgotPassword;
-    JTextField usernameField;
-    JPasswordField passwordField;
+    RoundedButton enterButton;
+    JButton createAccountButton, forgotPassword;
+    RoundedTextField usernameField;
+    CustomPasswordField passwordField;
     public LoginUI() {
         // Create frame
         frame = new JFrame("Login");
@@ -56,10 +58,9 @@ public class LoginUI extends JFrame implements ActionListener {
         );
 
         // Username Field
-        usernameField = new JTextField();
-        usernameField.setText("Username");
+        usernameField = new RoundedTextField("Username");
         usernameField.setBounds(250, 400, 400, 50);
-        usernameField.setBorder(roundedBorder); // Applied rounded border
+        usernameField.setBorder(null);
         usernameField.setBackground(Color.WHITE);
         panel.add(usernameField);
 
@@ -83,10 +84,9 @@ public class LoginUI extends JFrame implements ActionListener {
         });
 
         // Password Field
-        passwordField = new JPasswordField();
-        passwordField.setText("Password");
+        passwordField = new CustomPasswordField("Password");
         passwordField.setBounds(250, 500, 400, 50);
-        passwordField.setBorder(roundedBorder);
+        passwordField.setBorder(null);
         passwordField.setBackground(Color.WHITE);
         passwordField.setEchoChar((char) 0);
         panel.add(passwordField);
@@ -113,7 +113,7 @@ public class LoginUI extends JFrame implements ActionListener {
         });
 
         // Enter Button
-        enterButton = new JButton("Enter");
+        enterButton = new RoundedButton("Enter");
         enterButton.setBounds(250, 600, 400, 50);
         enterButton.setBackground(new Color(25, 50, 100));
         enterButton.setForeground(Color.WHITE);
