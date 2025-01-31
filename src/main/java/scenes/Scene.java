@@ -35,6 +35,7 @@
 
         private SceneInitializer sceneInitializer;
         private Physics2D physics2D;
+        private int coinCounter;
 
         // Constructor
         public Scene(SceneInitializer sceneInitializer) {
@@ -44,6 +45,7 @@
             this.gameObjects = new ArrayList<>();
             this.pendingObjects = new ArrayList<>();
             this.isRunning = false;
+            this.coinCounter = 0;
 
         }
 
@@ -291,5 +293,14 @@
                 GameObject.init(maxGoId);
                 Component.init(maxCompId);
             }
+        }
+
+        public int getCoinCounter(){
+            return this.coinCounter;
+        }
+
+        public void incrementCoinCounter(){
+            this.coinCounter+= 1;
+            System.out.println("In scenes the coin counter is " + this.coinCounter);
         }
     }

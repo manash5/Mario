@@ -43,6 +43,7 @@ public class Coin extends Component{
             AssetPool.getSound("assets/sounds/coin.ogg").play();
             if(!called){
                 Window.incrementCoin();
+                Window.getScene().incrementCoinCounter();
                 called = true;
             }
             playAnim = true;

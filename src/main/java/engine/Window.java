@@ -64,13 +64,14 @@ public class Window implements Observer {
 
     public Instant startTime;
     public Instant pauseStartTime;
-    public long totalElapsedTime = 0;
+    private long totalElapsedTime = 0;
     public boolean isPaused = false;
     public long pauseTime = 0;
     public static int coinsCollected =0;
 
     public MyJDBC myJDBC = new MyJDBC();
     private static boolean directGame = false;
+    private static Scene prevScene;
 
     // Constructor
     private Window() {
@@ -83,6 +84,7 @@ public class Window implements Observer {
     // this function is used to change the scene
     public static void changeScene(SceneInitializer sceneInitializer) {
         if (currentScene!= null){
+            prevScene = currentScene;
             currentScene.destroy();
         }
 
@@ -382,6 +384,7 @@ public class Window implements Observer {
                 this.runtimePlaying = true;
                 if(currentScene!= null){
                     currentScene.save();
+                    System.out.println("You have collected from scenes  " + currentScene.getCoinCounter() + " coins");
                 }
                 Window.changeScene(new LevelSceneInitializer());
                 Window.setEditMode(false);
@@ -398,11 +401,15 @@ public class Window implements Observer {
                     System.out.println("Game started at: " + startTime);
                 }
                 System.out.println("You have collected " + coinsCollected + " coins");
+                System.out.println("You have collected from scenes" + currentScene.getCoinCounter() + " coins");
                 System.out.println(MyJDBC.getUserID());
                 myJDBC.checkScore(MyJDBC.getUserID(), coinsCollected, (int)totalElapsedTime);
                 break;
             case GameEngineStopPlay:
                 this.runtimePlaying = false;
+                if (currentScene != null){
+                    System.out.println("You have collected from scenes  " + currentScene.getCoinCounter() + " coins");
+                }
 //                sceneHierarchyWindow.setTrue();
                 Window.changeScene(new LevelEditorSceneInitializer());
                 window.setEditMode(true);
@@ -452,6 +459,10 @@ public class Window implements Observer {
 
     public static void setDirectGame(boolean value){
         directGame = value;
+    }
+
+    public int getTotalElapsedTime(){
+        return (int)totalElapsedTime;
     }
 
 }

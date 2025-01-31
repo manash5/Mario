@@ -1,9 +1,12 @@
 package components;
 
+import Database.MyJDBC;
 import engine.GameObject;
 import engine.KeyListener;
 import engine.Prefabs;
 import engine.Window;
+import observers.events.Event;
+import observers.events.EventType;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -11,6 +14,7 @@ import physics2d.Physics2D;
 import physics2d.components.PillboxCollider;
 import physics2d.components.RigidBody2D;
 import physics2d.enums.BodyType;
+import scenes.LevelEditorSceneInitializer;
 import scenes.LevelSceneInitializer;
 import util.AssetPool;
 
@@ -66,6 +70,7 @@ public class PlayerController extends Component {
     private transient float airTime = 0.0f;
     private transient float deathTimer = 0.0f; // Timer to track elapsed time after death
     private transient boolean hasPlayedMusic = false; // Flag to ensure music plays only once
+    private transient MyJDBC myJDBC = new MyJDBC();
 
     // Initializes all the stuff necessary for the character
     @Override
@@ -108,6 +113,9 @@ public class PlayerController extends Component {
                 // TODO HERE WE CAN ADD THE AFTER STAGE CLEAR FILE
                 if (timeToCastle <= 0){
                     AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").play();
+                    System.out.println(Window.getScene().getCoinCounter());
+                    System.out.println(Window.get().getTotalElapsedTime());
+//                    myJDBC.checkScore(MyJDBC.getUserID(), Window.getScene().getCoinCounter(), (int)Window.getTotalElapsedTime());
                     Window.changeScene(new LevelSceneInitializer());
                 }
             }

@@ -15,7 +15,7 @@
         public void start(){
             topY = new Vector2f(this.gameObject.transform.position.y).add(0, 0.5f);
             AssetPool.getSound("assets/sounds/coin.ogg").play();
-            Window.incrementCoin();
+            Window.getScene().incrementCoinCounter();
         }
 
         // makes the coin go up to the highest point and after it is reached that point, it destroys
