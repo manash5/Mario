@@ -107,6 +107,8 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == leaderboardButton) {
             new LeadershipBoard(); // Assuming LeadershipBoard is another class you created
+            frame.setVisible(false);
+            frame.dispose();
         }
 
         if (e.getSource() == editButton){
