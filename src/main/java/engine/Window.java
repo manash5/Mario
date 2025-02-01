@@ -95,6 +95,7 @@ public class Window implements Observer {
         currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();
+
         currentScene.start();
     }
 
@@ -479,7 +480,13 @@ public class Window implements Observer {
 
     public static void restartGame() {
 
+        // Reset the singleton instance to null so a new one is created
+        window = null;
+
+        // Create a new instance and run it
+        Window.get().run();
     }
+
 
 
 

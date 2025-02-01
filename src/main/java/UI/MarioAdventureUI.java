@@ -22,7 +22,7 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
     // Constructor for setting up the JFrame
     public MarioAdventureUI() {
         // Create a new JFrame
-        frame = new JFrame("Super Mario World Adventure");
+        frame = new JFrame("MarioDai");
 
         // Set the JFrame properties
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,10 +39,10 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         backgroundLabel.setBounds(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
 
         // Add the heading title at the top-right corner
-        JLabel titleLabel = new JLabel("Super Mario World Adventure");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        JLabel titleLabel = new JLabel("Mario Dai");
+        titleLabel.setFont(new Font("Matura MT Script Capitals", Font.BOLD, 66));
         titleLabel.setForeground(new Color(169,11,12));
-        titleLabel.setBounds(600, 220, 600, 50); // Adjust position and size as needed
+        titleLabel.setBounds(650, 250, 600, 50); // Adjust position and size as needed
 
         // Add buttons
         playButton = new JButton("PLAY GAME");

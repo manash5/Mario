@@ -146,6 +146,7 @@ public class GameFinished extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == restartButton) {
+            Window.setDirectGame(true);
             Window.restartGame();
             frame.setVisible(false);
             frame.dispose();
