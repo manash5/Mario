@@ -59,7 +59,7 @@ public class MarioAdventureUI extends JFrame implements ActionListener {
         leaderboardButton.setFont(buttonFont);
         backgroundButton.setFont(buttonFont);
         logoutButton.setFont(buttonFont);
-        deleteButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        deleteButton.setFont(new Font("Arial", Font.PLAIN, 18));
 
         // Set button bounds
         playButton.setBounds(650, 400, 400, 60);

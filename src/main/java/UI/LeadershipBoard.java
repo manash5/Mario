@@ -111,7 +111,7 @@ public class LeadershipBoard extends JFrame implements ActionListener {
 
         for (int i = 0; i < leaderboardData.size(); i++) {
             lbGbc.gridy = i + 1;
-            String[] rowData = new String[]{String.valueOf(i + 1), leaderboardData.get(i)[1], leaderboardData.get(i)[2], leaderboardData.get(i)[3]};
+            String[] rowData = new String[]{String.valueOf(i + 1), leaderboardData.get(i)[1], leaderboardData.get(i)[2], leaderboardData.get(i)[3] + " secs"};
             JPanel row = createLeaderboardRow(rowData);
             row.setPreferredSize(new Dimension(600, 50));
             leaderboardPanel.add(row, lbGbc);
