@@ -1,6 +1,7 @@
 package engine;
 
 import Database.MyJDBC;
+import components.GameCamera;
 import editor.GameViewWindow;
 import editor.SceneHierarchyWindow;
 import imgui.ImGui;
@@ -8,6 +9,7 @@ import observers.EventSystem;
 import observers.Observer;
 import observers.events.Event;
 import observers.events.EventType;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -72,6 +74,7 @@ public class Window implements Observer {
     public MyJDBC myJDBC = new MyJDBC();
     private static boolean directGame = false;
     private static Scene prevScene;
+    private boolean closed = false; // Flag to track if window is already hidden
 
     // Constructor
     private Window() {
@@ -473,5 +476,18 @@ public class Window implements Observer {
     public void close() {
         glfwSetWindowShouldClose(glfwWindow, true);
     }
+
+    public static void restartGame() {
+
+    }
+
+
+
+
+    public void showWindow() {
+        glfwShowWindow(glfwWindow);
+    }
+
+
 
 }

@@ -4,8 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Instant;
 
 import engine.Window;
+import observers.EventSystem;
+import observers.events.Event;
+import observers.events.EventType;
 
 public class GameFinished extends JFrame implements ActionListener {
     JFrame frame;
@@ -13,7 +17,7 @@ public class GameFinished extends JFrame implements ActionListener {
     JButton editButton;
     JButton restartButton;
     JButton ExitButton;
-    Window window = Window.get();
+
 
 
     // Constructor for setting up the JFrame
@@ -61,7 +65,7 @@ public class GameFinished extends JFrame implements ActionListener {
         ExitButton.setBounds(1450, 930, 200, 40);
 
         // Set button colors and transparency
-        Color transparentGreen = new Color(170,187,86); // Transparent gray
+        Color transparentGreen = new Color(170,187,86, 80);
         setButtonStyle(restartButton, transparentGreen);
         setButtonStyle(editButton, transparentGreen);
         setButtonStyle(scoreButton, transparentGreen);
@@ -86,15 +90,47 @@ public class GameFinished extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
-    private void setButtonStyle(JButton button, Color transparentGray) {
+    private void setButtonStyle(JButton button, Color transparentGreen) {
         button.setOpaque(true);
-        button.setBackground(transparentGray);
+        button.setFocusable(false);
+        button.setBackground(transparentGreen);
         button.setForeground(Color.WHITE);
         button.setBorder(null);
         button.setFocusPainted(false);
         button.setRolloverEnabled(false);
-        button.addChangeListener(e -> button.setBackground(transparentGray)); // Prevent color changes
+
+        // Remove default blue selection effect
+        button.setContentAreaFilled(false);
+        button.setOpaque(true);
+        button.setBorderPainted(false);
+
+//        // Ensure background doesn't change when pressed
+        button.addChangeListener(e -> {
+            if (!button.getModel().isPressed() && !button.getModel().isRollover()) {
+                button.setBackground(new Color(170,187,86, 120));
+
+            }
+        });
+
+        // Fully override default painting behavior to prevent background flashing
+        button.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
+            @Override
+            public void update(Graphics g, JComponent c) {
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(button.getBackground()); // Ensures background color consistency
+                g2.fillRect(0, 0, c.getWidth(), c.getHeight()); // Paints the button's background
+                super.update(g, c);
+            }
+
+            @Override
+            protected void paintButtonPressed(Graphics g, AbstractButton b) {
+                // Do nothing to prevent default highlight effect
+                button.setContentAreaFilled(true);
+            }
+        });
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -105,21 +141,17 @@ public class GameFinished extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == editButton){
-            Window.setDirectGame(false);
-            window.run();
             frame.setVisible(false);
             frame.dispose();
         }
 
         if (e.getSource() == restartButton) {
-            Window.setDirectGame(true);
-            window.run();
+            Window.restartGame();
             frame.setVisible(false);
             frame.dispose();
-//            window.init();
-//            EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));
-
         }
+
+
 
         if (e.getSource() == ExitButton){
             new LoginUI();

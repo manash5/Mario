@@ -4,6 +4,7 @@
     import com.google.gson.GsonBuilder;
     import components.Component;
     import components.ComponentDeserializer;
+    import components.GameCamera;
     import engine.Camera;
     import engine.GameObject;
     import engine.GameObjectDeserializer;
@@ -303,4 +304,5 @@
             this.coinCounter+= 1;
             System.out.println("In scenes the coin counter is " + this.coinCounter);
         }
+
     }

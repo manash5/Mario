@@ -11,7 +11,7 @@ public class BackgroundSelector extends JFrame implements ActionListener {
     private JFrame frame;
     private JLabel imageLabel;
     private JButton selectButton;
-    private JButton backButton;
+    private RoundedButton backButton;
     private int currentIndex = 0;
     private static String imageAddress = "./assets/images/background.png";
     private Map<Integer, Boolean> selectionMap = new HashMap<>();
@@ -55,7 +55,7 @@ public class BackgroundSelector extends JFrame implements ActionListener {
         titlePanel.add(selectButton, BorderLayout.EAST);
 
         // Select Button
-        backButton = new JButton("");
+        backButton = new RoundedButton("");
         ImageIcon icon = new ImageIcon("./assets/images/left.png");
         Image img = icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         backButton.setIcon(new ImageIcon(img));
@@ -185,5 +185,26 @@ public class BackgroundSelector extends JFrame implements ActionListener {
 
     public static String getImageAddress(){
         return imageAddress;
+    }
+
+    class RoundedButton extends JButton {
+        public RoundedButton(String text) {
+            super(text);
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
+            setOpaque(false);
+            setForeground(Color.WHITE);
+            setFont(new Font("Serif", Font.BOLD, 22));
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(new Color(200, 80, 50));
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+            super.paintComponent(g);
+        }
     }
 }
